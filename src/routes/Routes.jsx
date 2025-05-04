@@ -38,7 +38,7 @@ children:[
         element:<ProtectedRoute><Bills></Bills></ProtectedRoute>
     },
     {
-        path:"/bills-details/:id",
+        path:"/bills/:id",
         element:<ProtectedRoute><BillDetails></BillDetails></ProtectedRoute>
     },
     {
