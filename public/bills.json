@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "bill_type": "electricity",
+        "icon": "https://icon-to-indicate-electricity-bill.com/icon.png",
+        "organization": "DESCO",
+        "amount": 1890,
+        "due-date": "2025-03-22T06:57:58.110Z"
+    },
+    {
+        "id": 2,
+        "bill_type": "gas",
+        "icon": "https://icon-to-indicate-gas-bill.com/icon.png",
+        "organization": "Tista",
+        "amount": 1488,
+        "due-date": "2025-03-28T06:57:58.110Z"
+    },
+    {
+        "id": 3,
+        "bill_type": "internet",
+        "icon": "https://icon-to-indicate-internet-bill.com/icon.png",
+        "organization": "Banglalink",
+        "amount": 799,
+        "due-date": "2025-03-30T06:57:58.110Z"
+    },
+    {
+        "id": 4,
+        "bill_type": "water",
+        "icon": "https://icon-to-indicate-water-bill.com/icon.png",
+        "organization": "WASA",
+        "amount": 650,
+        "due-date": "2025-04-05T06:57:58.110Z"
+    },
+    {
+        "id": 5,
+        "bill_type": "credit card",
+        "icon": "https://icon-to-indicate-credit-card-bill.com/icon.png",
+        "organization": "Standard Chartered Bank",
+        "amount": 12000,
+        "due-date": "2025-04-10T06:57:58.110Z"
+    },
+    {
+        "id": 6,
+        "bill_type": "tuition",
+        "icon": "https://icon-to-indicate-tuition-bill.com/icon.png",
+        "organization": "Dhaka International School",
+        "amount": 5000,
+        "due-date": "2025-04-15T06:57:58.110Z"
+    },
+    {
+        "id": 7,
+        "bill_type": "mobile recharge",
+        "icon": "https://icon-to-indicate-mobile-recharge.com/icon.png",
+        "organization": "Grameenphone",
+        "amount": 300,
+        "due-date": "2025-04-18T06:57:58.110Z"
+    },
+    {
+        "id": 8,
+        "bill_type": "cable tv",
+        "icon": "https://icon-to-indicate-cable-tv-bill.com/icon.png",
+        "organization": "Rangdhanu Cable",
+        "amount": 799,
+        "due-date": "2025-04-20T06:57:58.110Z"
+    },
+    {
+        "id": 9,
+        "bill_type": "insurance",
+        "icon": "https://icon-to-indicate-insurance-bill.com/icon.png",
+        "organization": "MetLife",
+        "amount": 2500,
+        "due-date": "2025-04-25T06:57:58.110Z"
+    },
+    {
+        "id": 10,
+        "bill_type": "loan",
+        "icon": "https://icon-to-indicate-loan-bill.com/icon.png",
+        "organization": "BRAC Bank",
+        "amount": 7000,
+        "due-date": "2025-04-28T06:57:58.110Z"
+    }
+]
