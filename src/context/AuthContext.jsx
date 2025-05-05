@@ -6,6 +6,8 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from 'firebase/auth';
 import { app } from '../firebase/firebase'; // Adjust path as needed
 
@@ -51,7 +53,10 @@ export const AuthProvider = ({ children }) => {
   const logOut = () => {
     setLoading(true);
     return signOut(auth)
-      .then(() => setUser(null))
+      .then(() => {
+        setUser(null);
+        setBalance(10000);  // Reset the balance on logout
+      })
       .finally(() => setLoading(false));
   };
 
@@ -60,11 +65,27 @@ export const AuthProvider = ({ children }) => {
     await updateProfile(auth.currentUser, updatedData);
     setUser({ ...auth.currentUser });
   };
+  const signInWithGoogle = () => {
+    setLoading(true);
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+      })
+      .finally(() => setLoading(false));
+  };
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+
+      // Reset balance to 10000 for a new user
+      if (currentUser) {
+        setBalance(10000);  // Set default balance for new user
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -80,6 +101,7 @@ export const AuthProvider = ({ children }) => {
     signIn,
     logOut,
     updateUser,
+    signInWithGoogle,
   };
 
   return (

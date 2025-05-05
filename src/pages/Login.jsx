@@ -1,80 +1,107 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext'; // Import the custom hook to access AuthContext
-import { useNavigate } from 'react-router-dom'; // To navigate after successful login
+import { useAuth } from '../context/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const { signIn, loading } = useAuth(); // Accessing the signIn function and loading state from AuthContext
+  const { signIn, signInWithGoogle, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setError(''); // Reset error state
+    setError('');
 
     try {
-      await signIn(email, password); // Attempt to sign in the user
-      navigate('/'); // Redirect to home page on successful login
+      await signIn(email, password);
+      navigate('/');
     } catch (err) {
-      setError(err.message); // Display error message if login fails
+      setError(err.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError('');
+    try {
+      await signInWithGoogle();
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
-    <div className="flex justify-center min-h-screen items-center bg-gray-100">
-      <div className="card w-full max-w-sm p-6 bg-white shadow-xl rounded-lg">
-        <h2 className="font-semibold text-2xl text-center mb-4">Login to Your Account</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-600 to-blue-500 p-8">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6">
+        <h2 className="text-3xl font-bold text-center text-gray-700">Login to Your Account</h2>
         <form onSubmit={handleSubmit}>
-          {/* Email Input */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input w-full p-2 mt-2 border border-gray-300 rounded-md"
-              placeholder="Enter your email"
-              required
-            />
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 border rounded-md border-gray-300 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-3 border rounded-md border-gray-300 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+            </div>
+
+            <div className="text-right text-sm text-blue-500 hover:underline">
+              <span>Forgot Password?</span>
+            </div>
+
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            <button
+              type="submit"
+              className={`w-full p-3 bg-blue-500 text-white rounded-md mt-4 transition duration-200 hover:bg-blue-600 focus:outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="w-full p-3 mt-4 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-200"
+            >
+              Continue with Google
+            </button>
           </div>
-
-          {/* Password Input */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input w-full p-2 mt-2 border border-gray-300 rounded-md"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-
-          {/* Error Message */}
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className={`btn w-full p-2 mt-4 bg-blue-500 text-white rounded-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={loading}
-          >
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-
-          {/* Redirect to Register page */}
-          <p className="mt-4 text-center">
-            Don't have an account?{' '}
-            <a href="/register" className="text-blue-500 hover:underline">
-              Register here
-            </a>
-          </p>
         </form>
+
+        <p className="text-center text-sm">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-blue-500 hover:underline">
+            Register here
+          </Link>
+        </p>
       </div>
     </div>
   );
