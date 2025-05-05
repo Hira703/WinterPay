@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom"; // For navigation links
 
-const Sidebar = () => {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await fetch("/categories.json");
-      const data = await response.json();
-      setCategories(data);
-    };
-
-    fetchCategories();
-  }, []);
+const Sidebar = ({ categories, activeCategory, onCategoryClick }) => {
+  
 
   return (
-    <div className="sticky top-0 w-64 bg-gray-200 h-screen p-5 shadow-lg">
-   
-    </div>
+    <div className="bg-base-100 shadow-md rounded-box p-4">
+    <h2 className="text-lg font-semibold mb-4">Categories</h2>
+    <ul className="menu bg-base-100 rounded-box">
+      <li>
+        <button
+          className={`capitalize ${activeCategory === "All" ? "active font-bold" : ""}`}
+          onClick={() => onCategoryClick("All")}
+        >
+          All
+        </button>
+      </li>
+      {categories.map((category) => (
+        <li key={category}>
+          <button
+            className={`capitalize ${activeCategory === category ? "active font-bold" : ""}`}
+            onClick={() => onCategoryClick(category)}
+          >
+            {category}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+
   );
 };
 

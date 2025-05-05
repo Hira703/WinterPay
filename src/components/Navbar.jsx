@@ -1,98 +1,138 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
+  const { user, logOut, balance } = useAuth(); // ✅ get balance from context
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
-//   const dropdownRef = useRef(null);  // Reference to the dropdown menu
-
-  const balance = 10000;
+  const [menuOpen, setMenuOpen] = useState(false); // For mobile menu toggle
+  const dropdownRef = useRef(null); // ✅ for outside click detection
 
   const handleLogout = () => {
     logOut()
       .then(() => {
         alert("You Logged Out successfully");
+        navigate('/login'); // ✅ redirect after logout
       })
-      .catch((error) => {
-        console.log(error);
-      });
- // Assuming logout clears user session
-    navigate('/login');  // Redirect to login page after logging out
+      .catch((error) => console.log(error));
   };
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
-    console.log("clicked")
   };
 
-  // Close dropdown if clicked outside
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-//         setDropdownVisible(false);
-//       }
-//     };
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
-//     document.addEventListener('click', handleClickOutside);
-
-//     return () => {
-//       document.removeEventListener('click', handleClickOutside);
-//     };
-//   }, []);
+  // ✅ Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <nav className="bg-gray-800 text-white p-4">
+    <nav className="bg-gradient-to-r from-sky-800 via-cyan-800 to-sky-900 text-white p-4 shadow-md">
       <div className="flex justify-between items-center max-w-screen-xl mx-auto">
         <div className="text-xl font-bold">
-          <Link to="/">MyLogo</Link>
+          <NavLink to="/" className="hover:text-cyan-300">❄ Winterpay</NavLink>
         </div>
 
+        {/* Desktop Menu */}
         <div className="space-x-4 hidden md:flex">
-          <Link to="/bills" className="hover:bg-gray-700 px-3 py-2 rounded-md">Bills</Link>
-          <Link to="/my-profile" className="hover:bg-gray-700 px-3 py-2 rounded-md">My Profile</Link>
+          <NavLink 
+            to="/bills" 
+            className={({ isActive }) => `px-3 py-2 rounded-md ${isActive ? 'text-cyan-400' : 'hover:text-cyan-200'}`}
+          >
+            Bills
+          </NavLink>
+          <NavLink 
+            to="/my-profile" 
+            className={({ isActive }) => `px-3 py-2 rounded-md ${isActive ? 'text-cyan-400' : 'hover:text-cyan-200'}`}
+          >
+            My Profile
+          </NavLink>
         </div>
 
+        {/* Mobile Hamburger Menu */}
+        <div className="md:hidden flex items-center space-x-4">
+          <button onClick={toggleMenu} className="text-white">
+            {menuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            )}
+          </button>
+        </div>
+
+        {/* Authenticated User Dropdown */}
         <div className="flex items-center space-x-4">
           {!user ? (
             <>
-              <Link to="/login" className="hover:bg-gray-700 px-3 py-2 rounded-md">Login</Link>
-              <Link to="/register" className="hover:bg-gray-700 px-3 py-2 rounded-md">Register</Link>
+              <NavLink 
+                to="/login" 
+                className={({ isActive }) => `px-3 py-2 rounded-md ${isActive ? 'text-cyan-400' : 'hover:text-cyan-200'}`}
+              >
+                Login
+              </NavLink>
+              <NavLink 
+                to="/register" 
+                className={({ isActive }) => `px-3 py-2 rounded-md ${isActive ? 'text-cyan-400' : 'hover:text-cyan-200'}`}
+              >
+                Register
+              </NavLink>
             </>
           ) : (
-            <div className="relative">
-              {/* Profile Button */}
+            <div className="relative" ref={dropdownRef}>
               <button 
-                className="btn flex items-center space-x-2 hover:bg-gray-700 px-3 py-2 rounded-md"
-                onClick={toggleDropdown} // Toggle the dropdown visibility on click
+                className="flex items-center space-x-2 hover:text-cyan-200 px-3 py-2 rounded-md"
+                onClick={toggleDropdown}
               >
                 <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full" />
                 <span>{user.displayName}</span>
               </button>
 
-              {/* Dropdown Menu */}
               {dropdownVisible && (
-                <div 
-                //   ref={dropdownRef} 
-                  className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg rounded-lg z-10"
-                >
+                <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg rounded-lg z-10">
                   <div className="p-4">
                     <p className="font-semibold">Balance: ৳{balance}</p>
                   </div>
-                  <Link 
-                    to="/login" 
-                    className="block py-2 px-4 hover:bg-gray-100 cursor-pointer"
-                    onClick={handleLogout}  // Logout on clicking
+                  <button 
+                    onClick={handleLogout} 
+                    className="block w-full text-left py-2 px-4 hover:bg-gray-100"
                   >
                     Log Out
-                  </Link>
+                  </button>
                 </div>
               )}
             </div>
           )}
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-gradient-to-r from-sky-800 via-cyan-800 to-sky-900 text-white p-4 space-y-4">
+          <NavLink 
+            to="/bills" 
+            className={({ isActive }) => `block px-3 py-2 rounded-md ${isActive ? 'text-cyan-400' : 'hover:text-cyan-200'}`}
+          >
+            Bills
+          </NavLink>
+          <NavLink 
+            to="/my-profile" 
+            className={({ isActive }) => `block px-3 py-2 rounded-md ${isActive ? 'text-cyan-400' : 'hover:text-cyan-200'}`}
+          >
+            My Profile
+          </NavLink>
+        </div>
+      )}
     </nav>
   );
 };

@@ -19,19 +19,35 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Register user
+  // ✅ Balance management
+  const [balance, setBalance] = useState(() => {
+    const stored = localStorage.getItem('balance');
+    return stored ? parseFloat(stored) : 10000; // default initial balance
+  });
+
+  useEffect(() => {
+    localStorage.setItem('balance', balance);
+  }, [balance]);
+
+  const payBill = (amount) => {
+    if (balance >= amount) {
+      setBalance(prev => prev - amount);
+      return true;
+    }
+    return false;
+  };
+
+  // 🔐 Auth methods
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // Login user
   const signIn = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // Logout user
   const logOut = () => {
     setLoading(true);
     return signOut(auth)
@@ -39,28 +55,27 @@ export const AuthProvider = ({ children }) => {
       .finally(() => setLoading(false));
   };
 
-  // ✅ Update user profile and refresh the context
   const updateUser = async (updatedData) => {
     if (!auth.currentUser) return;
     await updateProfile(auth.currentUser, updatedData);
-    // Manually update user state so it's reflected immediately
     setUser({ ...auth.currentUser });
   };
 
-  // Observer to track auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
-
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();
   }, []);
 
-  // Global context value
+  // 🌐 Expose all values
   const authData = {
     user,
     loading,
+    balance,
+    setBalance,
+    payBill,
     createUser,
     signIn,
     logOut,
@@ -74,5 +89,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the AuthContext
+// Custom hook
 export const useAuth = () => useContext(AuthContext);

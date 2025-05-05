@@ -1,0 +1,63 @@
+[
+    {
+      "type": "promo",
+      "title": "Get 10% off on your first bill payment this winter",
+      "description": "Don't miss out on our exclusive winter offer. Pay your bills now and save!",
+      "imageUrl": "/slider/inno.jpeg"
+    },
+    {
+      "type": "utility",
+      "title": "Easily pay your utility bills this winter",
+      "description": "Electricity, gas, water bills—manage them all in one place.",
+      "imageUrl": "/slider/seamless.jpeg"
+    },
+    {
+      "type": "partners",
+      "title": "Pay your bills with trusted organizations",
+      "description": "DESCO, NESCO, WASA, and more are now available.",
+      "imageUrl": "/category/desco.png"
+    },
+    {
+      "type": "testimonial",
+      "title": "WinterPay made it easy to manage all my utility bills in one place!",
+      "description": "I love how convenient and secure it is to pay my bills here.",
+      "imageUrl": "/slider/user-friendly.jpeg"
+    },
+    {
+      "type": "winter",
+      "title": "Stay warm this winter while we take care of your bills",
+      "description": "Enjoy the season, and let us handle the rest.",
+      "imageUrl": "/slider/support.avif"
+    },
+    {
+      "type": "how-it-works",
+      "title": "How WinterPay Works",
+      "description": "Step 1: Register. Step 2: Add utility accounts. Step 3: Pay your bills securely.",
+      "imageUrl": "/slider/secure.png"
+    },
+    {
+      "type": "features",
+      "title": "Introducing easy payment scheduling for your bills!",
+      "description": "Set your payments automatically and never miss a due date.",
+      "imageUrl": "/slider/secure.png"
+    },
+    {
+      "type": "rewards",
+      "title": "Earn points with every bill payment!",
+      "description": "Redeem your points for exciting rewards.",
+      "imageUrl": "/slider/secure.png"
+    },
+    {
+      "type": "partners-finance",
+      "title": "WinterPay is partnered with leading payment providers",
+      "description": "Visa, Mastercard, PayPal—your payments are in safe hands.",
+      "imageUrl": "/slider/secure.png"
+    },
+    {
+      "type": "cta",
+      "title": "Start Paying Now",
+      "description": "Get started with WinterPay and manage your bills today!",
+      "imageUrl": "/slider/secure.png"
+    }
+  ]
+  

@@ -1,40 +1,82 @@
 import React, { useState, useEffect } from 'react';
 import BillCard from '../components/BillCard';
+import Sidebar from '../components/Sidebar'; // Optional if you still want to keep the sidebar
 
 const Bills = () => {
   const [bills, setBills] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [filteredBills, setFilteredBills] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("All");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // Fetch JSON data
   useEffect(() => {
-    fetch('/bills.json')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch bills.');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setBills(data);
+    const loadData = async () => {
+      try {
+        const billsRes = await fetch('/bills.json');
+        const billsData = await billsRes.json();
+
+        const categoriesRes = await fetch('/categories.json');
+        const categoriesData = await categoriesRes.json();
+
+        setBills(billsData);
+        setCategories(["All", ...categoriesData.map(cat => cat.category)]);
+        setFilteredBills(billsData);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching bills:', err);
-        setError(err.message);
+      } catch (err) {
+        console.error("Error loading data", err);
         setLoading(false);
-      });
+      }
+    };
+
+    loadData();
   }, []);
 
-  if (loading) return <div className="text-center py-10 text-blue-600 font-semibold">Loading...</div>;
-  if (error) return <div className="text-center py-10 text-red-600 font-semibold">{error}</div>;
-  if (bills.length === 0) return <div className="text-center py-10 text-gray-600">No bills found.</div>;
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    setActiveCategory(category);
+    if (category === "All") {
+      setFilteredBills(bills);
+    } else {
+      const filtered = bills.filter(
+        (bill) => bill.bill_type.toLowerCase() === category.toLowerCase()
+      );
+      setFilteredBills(filtered);
+    }
+  };
+
+  if (loading) return <div className="text-center py-10">Loading...</div>;
 
   return (
-    <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {bills.map((bill) => (
-        <BillCard key={bill.id} bill={bill} />
-      ))}
+    <div className="p-4 space-y-6">
+      {/* Dropdown Filter */}
+      <div className="max-w-xs">
+        <label className="block mb-2 text-sm font-medium text-gray-700">Filter by Bill Type:</label>
+        <select
+          value={activeCategory}
+          onChange={handleCategoryChange}
+          className="select select-bordered w-full"
+        >
+          {categories.map((cat, index) => (
+            <option key={index} value={cat}>{cat}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Bill Grid */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4">
+          {activeCategory === "All" ? "All Bills" : `${activeCategory} Bills`}
+        </h2>
+        {filteredBills.length === 0 ? (
+          <p className="text-gray-500">No bills found.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredBills.map((bill) => (
+              <BillCard key={bill.id} bill={bill} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

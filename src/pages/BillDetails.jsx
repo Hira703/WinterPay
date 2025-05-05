@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
+import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const BillDetails = () => {
   const { id } = useParams();
-  console.log(id)
-  const [bill, setBill] = useState(null);
   const navigate = useNavigate();
+  const [bill, setBill] = useState(null);
+  const [paid, setPaid] = useState(false);
+  const { balance, setBalance } = useAuth();
 
   useEffect(() => {
     fetch('/bills.json')
@@ -15,8 +18,13 @@ const BillDetails = () => {
         const selectedBill = data.find(item => item.id === parseInt(id));
         if (selectedBill) {
           setBill(selectedBill);
+          // Check localStorage for payment status
+          const paidBills = JSON.parse(localStorage.getItem('paidBills')) || [];
+          if (paidBills.includes(selectedBill.id)) {
+            setPaid(true);
+          }
         } else {
-          navigate('/bills'); // Redirect if not found
+          navigate('/bills');
         }
       })
       .catch(error => {
@@ -25,7 +33,35 @@ const BillDetails = () => {
       });
   }, [id, navigate]);
 
-  if (!bill) return <div className="text-center text-lg py-10">Loading bill details...</div>;
+  const handlePayment = () => {
+    if (paid) {
+      toast.error("You have already paid this bill!");
+      return;
+    }
+
+    if (balance < bill.amount) {
+      toast.error('Insufficient balance!');
+      return;
+    }
+
+    // Update balance and mark as paid
+    setBalance(prev => prev - bill.amount);
+    setPaid(true);
+    toast.success('Payment Successful!');
+
+    // Save payment status in localStorage
+    const paidBills = JSON.parse(localStorage.getItem('paidBills')) || [];
+    if (!paidBills.includes(bill.id)) {
+      paidBills.push(bill.id);
+      localStorage.setItem('paidBills', JSON.stringify(paidBills));
+    }
+
+    navigate('/bills');
+  };
+
+  if (!bill) {
+    return <div className="text-center text-lg py-10">Loading bill details...</div>;
+  }
 
   const { bill_type, icon, organization, amount, ['due-date']: dueDate } = bill;
 
@@ -39,10 +75,17 @@ const BillDetails = () => {
 
         <div className="w-full space-y-2 text-center">
           <p className="text-lg"><span className="font-semibold">Amount:</span> ৳{amount}</p>
-          <p className="text-md text-gray-600"><span className="font-semibold">Due Date:</span> {format(new Date(dueDate), 'dd MMM yyyy')}</p>
+          <p className="text-md text-gray-600">
+            <span className="font-semibold">Due Date:</span> {format(new Date(dueDate), 'dd MMM yyyy')}
+          </p>
         </div>
 
-        <button className="btn btn-primary mt-6 w-full">Pay Now</button>
+        <button
+          onClick={handlePayment}
+          className={`btn mt-6 w-full ${paid ? 'btn-disabled' : 'btn-primary'}`}
+        >
+          {paid ? 'Already Paid' : 'Pay Now'}
+        </button>
       </div>
     </div>
   );
