@@ -1,4 +1,3 @@
-// CategoryCard.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +23,18 @@ const CategoryCard = ({ category }) => {
       </figure>
       <div className="card-body text-center">
         <h3 className="text-xl font-semibold text-gray-800">{category.category}</h3>
+        <p className="text-sm text-gray-600 mt-2">
+          {/* Highlight service provider names */}
+          {category.service_providers.map((provider, index) => (
+            <span
+              key={index}
+              className="font-semibold text-cyan-600" // Highlight style
+            >
+              {provider}
+              {index < category.service_providers.length - 1 && ", "}
+            </span>
+          ))}
+        </p>
       </div>
     </div>
   );

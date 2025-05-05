@@ -8,9 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-cover bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/src/assets/winter-bg.jpg')" }}>
+    <div className="min-h-screen ">
       <Navbar />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 py-8 w-11/12 ">
         <Outlet />
       </main>
       <Footer />

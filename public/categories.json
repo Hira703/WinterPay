@@ -4,10 +4,7 @@
       "category": "Electricity",
       "image": "/category/desco.png", 
       "service_providers": [
-        "Desco",
-        "WASA",
-        "BPDB",
-        "PDB"
+        "Desco"
       ]
     },
     {
@@ -15,8 +12,8 @@
       "category": "Gas",
       "image": "/public/category/titas.png", 
       "service_providers": [
-        "Titas Gas",
-        "BGAS"
+        "Titas Gas"
+        
       ]
     },
     {
@@ -24,8 +21,7 @@
       "category": "Water",
       "image": "/category/wasa.jpeg", 
       "service_providers": [
-        "WASA",
-        "DHAKA WASA"
+        "WASA"
       ]
     },
     {
@@ -33,13 +29,7 @@
       "category": "Internet",
       "image": "/public/category/grameenphone.png", 
       "service_providers": [
-        "Grameenphone",
-        "Robi",
-        "Banglalink",
-        "Teletalk",
-        "BSCCL",
-        "Airtel",
-        "Wi-tribe"
+        "Grameenphone"
       ]
     },
     {
@@ -47,9 +37,7 @@
       "category": "TV & Cable",
       "image": "/category/cable.jpg", 
       "service_providers": [
-        "Sundarban Cable",
-        "Real Cable",
-        "Dish TV Bangladesh"
+        "Sundarban Cable"
       ]
     },
     {
@@ -57,10 +45,7 @@
       "category": "Insurance",
       "image": "/public/category/green-delta.jpeg", 
       "service_providers": [
-        "MetLife Bangladesh",
-        "Sadharan Bima Corporation",
-        "Jubilee Life Insurance",
-        "Pragati Life Insurance",
+       
         "Green Delta Insurance"
       ]
     },
@@ -69,11 +54,8 @@
       "category": "Mobile Recharge",
       "image": "/public/category/Banglalink.png", 
       "service_providers": [
-        "Grameenphone",
-        "Robi",
-        "Banglalink",
-        "Teletalk",
-        "Airtel"
+       
+        "Banglalink"
       ]
     },
     {
@@ -81,10 +63,8 @@
       "category": "Loan Repayments",
       "image": "/category/dutch-bangla.png", 
       "service_providers": [
-        "Brac Bank",
-        "Dutch-Bangla Bank",
-        "City Bank",
-        "Bank Asia"
+        
+        "Dutch-Bangla Bank"
       ]
     }
   ]

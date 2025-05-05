@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/logos/nav-logo.jpg'
 
 const Navbar = () => {
-  const { user, logOut, balance } = useAuth(); // ✅ get balance from context
+  const { user, logOut, balance } = useAuth(); 
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // For mobile menu toggle
-  const dropdownRef = useRef(null); // ✅ for outside click detection
+  const [menuOpen, setMenuOpen] = useState(false); 
+  const dropdownRef = useRef(null); 
 
   const handleLogout = () => {
     logOut()
       .then(() => {
         alert("You Logged Out successfully");
-        navigate('/login'); // ✅ redirect after logout
+        navigate('/login'); 
       })
       .catch((error) => console.log(error));
   };
@@ -40,9 +41,13 @@ const Navbar = () => {
   return (
     <nav className="bg-gradient-to-r from-sky-800 via-cyan-800 to-sky-900 text-white p-4 shadow-md">
       <div className="flex justify-between items-center max-w-screen-xl mx-auto">
-        <div className="text-xl font-bold">
-          <NavLink to="/" className="hover:text-cyan-300">❄ Winterpay</NavLink>
-        </div>
+      <div className="text-xl font-bold flex items-center gap-2">
+  <NavLink to="/" className="flex items-center gap-2 hover:text-cyan-300">
+    <img src={logo} alt="WinterPay Logo" className="h-10 w-10 rounded-full shadow-md" />
+    <span>Winterpay</span>
+  </NavLink>
+</div>
+
 
         {/* Desktop Menu */}
         <div className="space-x-4 hidden md:flex">
