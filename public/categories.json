@@ -1,0 +1,53 @@
+[
+    {
+      "id": 1,
+      "name": "Electricity",
+      "icon": "MdElectricBolt"
+    },
+    {
+      "id": 2,
+      "name": "Water",
+      "icon": "FaFaucet"
+    },
+    {
+      "id": 3,
+      "name": "Gas",
+      "icon": "GiGasStove"
+    },
+    {
+      "id": 4,
+      "name": "Internet",
+      "icon": "MdWifi"
+    },
+    {
+      "id": 5,
+      "name": "Mobile Recharge",
+      "icon": "MdPhoneAndroid"
+    },
+    {
+      "id": 6,
+      "name": "TV & DTH",
+      "icon": "MdTv"
+    },
+    {
+      "id": 7,
+      "name": "Education",
+      "icon": "FaUniversity"
+    },
+    {
+      "id": 8,
+      "name": "Insurance",
+      "icon": "FaShieldAlt"
+    },
+    {
+      "id": 9,
+      "name": "Credit Card",
+      "icon": "FaCreditCard"
+    },
+    {
+      "id": 10,
+      "name": "Government Fees",
+      "icon": "GiBank"
+    }
+  ]
+  
