@@ -8,12 +8,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const { signIn, signInWithGoogle, loading } = useAuth();
+  const [message, setMessage] = useState('');
+  const { signIn, signInWithGoogle, resetPassword, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setMessage('');
 
     try {
       await signIn(email, password);
@@ -25,9 +27,27 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     setError('');
+    setMessage('');
     try {
       await signInWithGoogle();
       navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    setError('');
+    setMessage('');
+
+    if (!email) {
+      setError('Please enter your email to reset password.');
+      return;
+    }
+
+    try {
+      await resetPassword(email);
+      setMessage('Password reset email sent. Please check your inbox.');
     } catch (err) {
       setError(err.message);
     }
@@ -72,11 +92,12 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="text-right text-sm text-blue-500 hover:underline">
-              <span>Forgot Password?</span>
+            <div className="text-right text-sm text-blue-500 hover:underline cursor-pointer">
+              <span onClick={handleForgotPassword}>Forgot Password?</span>
             </div>
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
+            {message && <p className="text-green-600 text-sm">{message}</p>}
 
             <button
               type="submit"

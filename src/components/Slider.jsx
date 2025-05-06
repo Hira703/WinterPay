@@ -1,86 +1,75 @@
 import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css'; // Import the Swiper styles
-import 'swiper/css/pagination'; // Import pagination styles
-import 'swiper/css/navigation'; // Import navigation styles
-import { Pagination } from 'swiper/modules';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-const Slider = () => {
+const CustomSlider = () => {
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch the data from the JSON file
     fetch('/sliderData.json')
-      .then((response) => response.json()) // Parse the response as JSON
+      .then((response) => response.json())
       .then((data) => {
-        setSlides(data); // Set the fetched data into the state
-        setLoading(false); // Set loading to false after data is fetched
+        setSlides(data);
+        setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError("Failed to load slider data");
         setLoading(false);
       });
   }, []);
 
-  if (loading) {
-    return <div className="text-center p-6">Loading...</div>; // Show loading text while fetching data
-  }
+  if (loading) return <div className="text-center py-6 text-gray-600">Loading...</div>;
+  if (error) return <div className="text-center text-red-500 py-6">{error}</div>;
 
-  if (error) {
-    return <div className="text-center text-red-500 p-6">{error}</div>; // Show error message if data fetching fails
-  }
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3500,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 768, settings: { slidesToShow: 1 } },
+    ],
+  };
 
   return (
-    <div className="my-12">
-      <h2 className="text-3xl font-bold text-center text-blue-900 mb-6">WinterPay Highlights</h2>
+    <div className="my-20 px-4 md:px-12">
+      <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
+        WinterPay Highlights
+      </h2>
 
-      <Swiper
-        spaceBetween={20} // Space between each slide
-        slidesPerView={1} // One slide at a time on mobile
-        breakpoints={{
-          640: {
-            slidesPerView: 2, // Two slides on medium screens
-          },
-          768: {
-            slidesPerView: 3, // Three slides on large screens
-          },
-          1024: {
-            slidesPerView: 4, // Four slides on extra-large screens
-          },
-        }}
-        loop={true} // Infinite loop
-        autoplay={{
-          delay: 2500, // Automatic slide transition interval
-          disableOnInteraction: false, // Slide continues when interacting
-        }}
-        pagination={{
-          clickable: true, // Enable clickable pagination
-          el: '.swiper-pagination', // Custom pagination element
-        }}
-        modules={[Pagination]} // Include the Pagination module
-      >
+      <Slider {...settings}>
         {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all transform hover:scale-105">
-              <img
-                src={slide.imageUrl}
-                alt={slide.title || 'Slide Image'}
-                className="w-full h-36 object-cover rounded-md mb-4 border-4 border-white"
-                onError={(e) => e.target.src = '/images/fallback.jpg'} // Fallback image if the src is broken
-              />
-              <h3 className="text-xl font-semibold text-center text-blue-900 mb-2">{slide.title}</h3>
-              <p className="text-center text-gray-700">{slide.description}</p>
+          <div key={index} className="px-4">
+            <div className="bg-white/90 backdrop-blur-lg p-6 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-200 transition-all duration-300 ease-in-out h-[450px] flex flex-col justify-between">
+              <div className="w-full h-[200px] overflow-hidden rounded-xl mb-5">
+                <img
+                  src={slide.imageUrl}
+                  alt={slide.title || 'Slide Image'}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  onError={(e) => (e.target.src = '/images/fallback.jpg')}
+                />
+              </div>
+              <div className="flex-1 flex flex-col justify-between">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">
+                  {slide.title}
+                </h3>
+                <p className="text-gray-600 text-center text-sm leading-relaxed">
+                  {slide.description}
+                </p>
+              </div>
             </div>
-          </SwiperSlide>
+          </div>
         ))}
-      </Swiper>
-
-      {/* Adjust pagination dots position */}
-      <div className="swiper-pagination m-4 text-center"></div> {/* Add margin to move dots down */}
+      </Slider>
     </div>
   );
 };
 
-export default Slider;
+export default CustomSlider;

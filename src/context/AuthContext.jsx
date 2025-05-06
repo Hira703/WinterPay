@@ -8,15 +8,14 @@ import {
   updateProfile,
   signInWithPopup,
   GoogleAuthProvider,
+  sendPasswordResetEmail, // ⬅️ Import this
 } from 'firebase/auth';
-import { app } from '../firebase/firebase'; // Adjust path as needed
+import { app } from '../firebase/firebase';
 
 const auth = getAuth(app);
 
-// Create the AuthContext
 export const AuthContext = createContext();
 
-// AuthProvider component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -24,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   // ✅ Balance management
   const [balance, setBalance] = useState(() => {
     const stored = localStorage.getItem('balance');
-    return stored ? parseFloat(stored) : 10000; // default initial balance
+    return stored ? parseFloat(stored) : 10000;
   });
 
   useEffect(() => {
@@ -55,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth)
       .then(() => {
         setUser(null);
-        setBalance(10000);  // Reset the balance on logout
+        setBalance(10000);
       })
       .finally(() => setLoading(false));
   };
@@ -65,32 +64,38 @@ export const AuthProvider = ({ children }) => {
     await updateProfile(auth.currentUser, updatedData);
     setUser({ ...auth.currentUser });
   };
+
   const signInWithGoogle = () => {
     setLoading(true);
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider)
       .then((result) => {
-        const user = result.user;
-        setUser(user);
+        setUser(result.user);
       })
       .finally(() => setLoading(false));
   };
 
+  // 🆕 Forgot Password Support
+  const resetPassword = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email)
+      .finally(() => setLoading(false));
+  };
 
+  // 🔄 Track auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
 
-      // Reset balance to 10000 for a new user
       if (currentUser) {
-        setBalance(10000);  // Set default balance for new user
+        setBalance(10000);
       }
     });
     return () => unsubscribe();
   }, []);
 
-  // 🌐 Expose all values
+  // 🌐 Context value
   const authData = {
     user,
     loading,
@@ -102,6 +107,7 @@ export const AuthProvider = ({ children }) => {
     logOut,
     updateUser,
     signInWithGoogle,
+    resetPassword, // ⬅️ Expose this
   };
 
   return (
@@ -111,5 +117,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook
 export const useAuth = () => useContext(AuthContext);
