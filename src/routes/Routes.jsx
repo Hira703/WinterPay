@@ -8,10 +8,12 @@ import MyProfile from "../pages/MyProfile";
 import UpdateProfile from "../pages/UpdateProfile";
 import Bills from "../pages/Bills";
 import BillDetails from "../pages/BillDetails";
+import ErrorPage from "../pages/ErrorPage";
 
 export const router=createBrowserRouter([
 {path:'/',
 element:<MainLayout></MainLayout>,
+errorElement:<ErrorPage></ErrorPage>,
 children:[
     {
         path:"/",
@@ -41,10 +43,10 @@ children:[
         path:"/bills/:id",
         element:<ProtectedRoute><BillDetails></BillDetails></ProtectedRoute>
     },
-    {
-        path: "*",
-        element: <div className="text-center mt-20 text-2xl font-bold">404 | Page Not Found</div>,
-      },
+    // {
+    //     path: "*",
+    //     element: <div className="text-center mt-20 text-2xl font-bold">404 | Page Not Found</div>,
+    //   },
 ]
 },
 

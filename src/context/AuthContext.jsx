@@ -8,7 +8,7 @@ import {
   updateProfile,
   signInWithPopup,
   GoogleAuthProvider,
-  sendPasswordResetEmail, // ⬅️ Import this
+  sendPasswordResetEmail, 
 } from 'firebase/auth';
 import { app } from '../firebase/firebase';
 
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Balance management
+
   const [balance, setBalance] = useState(() => {
     const stored = localStorage.getItem('balance');
     return stored ? parseFloat(stored) : 10000;
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     return false;
   };
 
-  // 🔐 Auth methods
+
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -75,14 +75,14 @@ export const AuthProvider = ({ children }) => {
       .finally(() => setLoading(false));
   };
 
-  // 🆕 Forgot Password Support
+
   const resetPassword = (email) => {
     setLoading(true);
     return sendPasswordResetEmail(auth, email)
       .finally(() => setLoading(false));
   };
 
-  // 🔄 Track auth state
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -95,7 +95,6 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // 🌐 Context value
   const authData = {
     user,
     loading,
@@ -107,7 +106,7 @@ export const AuthProvider = ({ children }) => {
     logOut,
     updateUser,
     signInWithGoogle,
-    resetPassword, // ⬅️ Expose this
+    resetPassword, 
   };
 
   return (

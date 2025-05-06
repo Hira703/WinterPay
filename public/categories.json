@@ -10,7 +10,7 @@
     {
       "id": 2,
       "category": "Gas",
-      "image": "/public/category/titas.png", 
+      "image": "/category/titas.png", 
       "service_providers": [
         "Titas Gas"
         
@@ -27,7 +27,7 @@
     {
       "id": 4,
       "category": "Internet",
-      "image": "/public/category/grameenphone.png", 
+      "image": "/category/grameenphone.png", 
       "service_providers": [
         "Grameenphone"
       ]
@@ -43,7 +43,7 @@
     {
       "id": 6,
       "category": "Insurance",
-      "image": "/public/category/green-delta.jpeg", 
+      "image": "/category/green-delta.jpeg", 
       "service_providers": [
        
         "Green Delta Insurance"
@@ -52,7 +52,7 @@
     {
       "id": 7,
       "category": "Mobile Recharge",
-      "image": "/public/category/Banglalink.png", 
+      "image": "/category/Banglalink.png", 
       "service_providers": [
        
         "Banglalink"
