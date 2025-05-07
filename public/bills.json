@@ -1,163 +1,182 @@
 [
-    {
-      "id": 1,
-      "bill_type": "electricity",
-      "icon": "/icons/electricity.png",
-      "organization": "DESCO",
-      "amount": 1890,
-      "due-date": "2025-03-22T06:57:58.110Z"
-    },
-    {
-      "id": 11,
-      "bill_type": "electricity",
-      "icon": "/icons/electricity.png",
-      "organization": "NESCO",
-      "amount": 2150,
-      "due-date": "2025-04-20T06:57:58.110Z"
-    },
-    {
-      "id": 2,
-      "bill_type": "gas",
-      "icon": "/icons/gas.avif",
-      "organization": "Tista",
-      "amount": 1488,
-      "due-date": "2025-03-28T06:57:58.110Z"
-    },
-    {
-      "id": 12,
-      "bill_type": "gas",
-      "icon": "/icons/gas.avif",
-      "organization": "Jalalabad Gas",
-      "amount": 1720,
-      "due-date": "2025-04-25T06:57:58.110Z"
-    },
-    {
-      "id": 3,
-      "bill_type": "internet",
-      "icon": "/icons/internet.png",
-      "organization": "Banglalink",
-      "amount": 799,
-      "due-date": "2025-03-30T06:57:58.110Z"
-    },
-    {
-      "id": 13,
-      "bill_type": "internet",
-      "icon": "/icons/internet.png",
-      "organization": "Link3",
-      "amount": 999,
-      "due-date": "2025-04-22T06:57:58.110Z"
-    },
-    {
-      "id": 4,
-      "bill_type": "water",
-      "icon": "/icons/download.png",
-      "organization": "WASA",
-      "amount": 650,
-      "due-date": "2025-04-05T06:57:58.110Z"
-    },
-    {
-      "id": 14,
-      "bill_type": "water",
-      "icon": "/icons/download.png",
-      "organization": "PDB Water",
-      "amount": 700,
-      "due-date": "2025-04-15T06:57:58.110Z"
-    },
-    {
-      "id": 5,
-      "bill_type": "credit card",
-      "icon": "/icons/credit card.jpeg",
-      "organization": "Standard Chartered Bank",
-      "amount": 12000,
-      "due-date": "2025-04-10T06:57:58.110Z"
-    },
-    {
-      "id": 15,
-      "bill_type": "credit card",
-      "icon": "/icons/credit card.jpeg",
-      "organization": "DBBL",
-      "amount": 9500,
-      "due-date": "2025-04-28T06:57:58.110Z"
-    },
-    {
-      "id": 6,
-      "bill_type": "tuition",
-      "icon": "/icons/tuition.jpeg",
-      "organization": "Dhaka International School",
-      "amount": 5000,
-      "due-date": "2025-04-15T06:57:58.110Z"
-    },
-    {
-      "id": 16,
-      "bill_type": "tuition",
-      "icon": "/icons/tuition.jpeg",
-      "organization": "Scholars Academy",
-      "amount": 4500,
-      "due-date": "2025-05-01T06:57:58.110Z"
-    },
-    {
-      "id": 7,
-      "bill_type": "mobile recharge",
-      "icon": "/icons/mobile.jpeg",
-      "organization": "Grameenphone",
-      "amount": 300,
-      "due-date": "2025-04-18T06:57:58.110Z"
-    },
-    {
-      "id": 17,
-      "bill_type": "mobile recharge",
-      "icon": "/icons/mobile.jpeg",
-      "organization": "Robi",
-      "amount": 500,
-      "due-date": "2025-04-27T06:57:58.110Z"
-    },
-    {
-      "id": 8,
-      "bill_type": "cable tv",
-      "icon": "/icons/cable.avif",
-      "organization": "Rangdhanu Cable",
-      "amount": 799,
-      "due-date": "2025-04-20T06:57:58.110Z"
-    },
-    {
-      "id": 18,
-      "bill_type": "cable tv",
-      "icon": "/icons/cable.avif",
-      "organization": "City Cable",
-      "amount": 850,
-      "due-date": "2025-05-01T06:57:58.110Z"
-    },
-    {
-      "id": 9,
-      "bill_type": "insurance",
-      "icon": "/icons/insurance.png",
-      "organization": "MetLife",
-      "amount": 2500,
-      "due-date": "2025-04-25T06:57:58.110Z"
-    },
-    {
-      "id": 19,
-      "bill_type": "insurance",
-      "icon": "/icons/insurance.png",
-      "organization": "LIC",
-      "amount": 3200,
-      "due-date": "2025-04-30T06:57:58.110Z"
-    },
-    {
-      "id": 10,
-      "bill_type": "loan",
-      "icon": "/icons/loan.jpeg",
-      "organization": "BRAC Bank",
-      "amount": 7000,
-      "due-date": "2025-04-28T06:57:58.110Z"
-    },
-    {
-      "id": 20,
-      "bill_type": "loan repayments",
-      "icon": "/icons/loan.jpeg",
-      "organization": "City Bank",
-      "amount": 10000,
-      "due-date": "2025-05-03T06:57:58.110Z"
-    }
-  ]
-  
+  {
+    "id": 1,
+    "bill_type": "electricity",
+    "icon": "/icons/electricity.png",
+    "bill_type_icon": "/category/desco.png",
+    "organization": "DESCO",
+    "amount": 1890,
+    "due-date": "2025-03-22T06:57:58.110Z"
+  },
+  {
+    "id": 11,
+    "bill_type": "electricity",
+    "icon": "/icons/electricity.png",
+    "bill_type_icon": "/category/PDB Logo.png",
+    "organization": "NESCO",
+    "amount": 2150,
+    "due-date": "2025-04-20T06:57:58.110Z"
+  },
+  {
+    "id": 2,
+    "bill_type": "gas",
+    "icon": "/icons/gas.avif",
+    "bill_type_icon": "/public/category/titas.png",
+    "organization": "Tista",
+    "amount": 1488,
+    "due-date": "2025-03-28T06:57:58.110Z"
+  },
+  {
+    "id": 12,
+    "bill_type": "gas",
+    "icon": "/icons/gas.avif",
+    "bill_type_icon": "/category/bgas.png",
+    "organization": "Jalalabad Gas",
+    "amount": 1720,
+    "due-date": "2025-04-25T06:57:58.110Z"
+  },
+  {
+    "id": 3,
+    "bill_type": "internet",
+    "icon": "/icons/internet.png",
+    "bill_type_icon": "/category/Banglalink.png",
+    "organization": "Banglalink",
+    "amount": 799,
+    "due-date": "2025-03-30T06:57:58.110Z"
+  },
+  {
+    "id": 13,
+    "bill_type": "internet",
+    "icon": "/icons/internet.png",
+    "bill_type_icon": "/category/teletalk.jpeg",
+    "organization": "Link3",
+    "amount": 999,
+    "due-date": "2025-04-22T06:57:58.110Z"
+  },
+  {
+    "id": 4,
+    "bill_type": "water",
+    "icon": "/icons/download.png",
+    "bill_type_icon": "/category/wasa.jpeg",
+    "organization": "WASA",
+    "amount": 650,
+    "due-date": "2025-04-05T06:57:58.110Z"
+  },
+  {
+    "id": 14,
+    "bill_type": "water",
+    "icon": "/icons/download.png",
+    "bill_type_icon": "/category/PDB Logo.png",
+    "organization": "PDB Water",
+    "amount": 700,
+    "due-date": "2025-04-15T06:57:58.110Z"
+  },
+  {
+    "id": 5,
+    "bill_type": "credit card",
+    "icon": "/icons/credit card.jpeg",
+    "bill_type_icon": "/public/category/city bank.png",
+    "organization": "Standard Chartered Bank",
+    "amount": 12000,
+    "due-date": "2025-04-10T06:57:58.110Z"
+  },
+  {
+    "id": 15,
+    "bill_type": "credit card",
+    "icon": "/icons/credit card.jpeg",
+    "bill_type_icon": "/public/category/dutch-bangla.png",
+    "organization": "DBBL",
+    "amount": 9500,
+    "due-date": "2025-04-28T06:57:58.110Z"
+  },
+  {
+    "id": 6,
+    "bill_type": "tuition",
+    "icon": "/icons/tuition.jpeg",
+    "bill_type_icon": "/icons/tuition.jpeg",
+    "organization": "Dhaka International School",
+    "amount": 5000,
+    "due-date": "2025-04-15T06:57:58.110Z"
+  },
+  {
+    "id": 16,
+    "bill_type": "tuition",
+    "icon": "/icons/tuition.jpeg",
+    "bill_type_icon": "/icons/tuition.jpeg",
+    "organization": "Scholars Academy",
+    "amount": 4500,
+    "due-date": "2025-05-01T06:57:58.110Z"
+  },
+  {
+    "id": 7,
+    "bill_type": "mobile recharge",
+    "icon": "/icons/mobile.jpeg",
+    "bill_type_icon": "/icons/mobile.jpeg",
+    "organization": "Grameenphone",
+    "amount": 300,
+    "due-date": "2025-04-18T06:57:58.110Z"
+  },
+  {
+    "id": 17,
+    "bill_type": "mobile recharge",
+    "icon": "/icons/mobile.jpeg",
+    "bill_type_icon": "/icons/mobile.jpeg",
+    "organization": "Robi",
+    "amount": 500,
+    "due-date": "2025-04-27T06:57:58.110Z"
+  },
+  {
+    "id": 8,
+    "bill_type": "cable tv",
+    "icon": "/icons/cable.avif",
+    "bill_type_icon": "/icons/cable.avif",
+    "organization": "Rangdhanu Cable",
+    "amount": 799,
+    "due-date": "2025-04-20T06:57:58.110Z"
+  },
+  {
+    "id": 18,
+    "bill_type": "cable tv",
+    "icon": "/icons/cable.avif",
+    "bill_type_icon": "/icons/cable.avif",
+    "organization": "City Cable",
+    "amount": 850,
+    "due-date": "2025-05-01T06:57:58.110Z"
+  },
+  {
+    "id": 9,
+    "bill_type": "insurance",
+    "icon": "/icons/insurance.png",
+    "bill_type_icon": "/icons/insurance.png",
+    "organization": "MetLife",
+    "amount": 2500,
+    "due-date": "2025-04-25T06:57:58.110Z"
+  },
+  {
+    "id": 19,
+    "bill_type": "insurance",
+    "icon": "/icons/insurance.png",
+    "bill_type_icon": "/icons/insurance.png",
+    "organization": "LIC",
+    "amount": 3200,
+    "due-date": "2025-04-30T06:57:58.110Z"
+  },
+  {
+    "id": 10,
+    "bill_type": "loan",
+    "icon": "/icons/loan.jpeg",
+    "bill_type_icon": "/icons/loan.jpeg",
+    "organization": "BRAC Bank",
+    "amount": 7000,
+    "due-date": "2025-04-28T06:57:58.110Z"
+  },
+  {
+    "id": 20,
+    "bill_type": "loan repayments",
+    "icon": "/icons/loan.jpeg",
+    "bill_type_icon": "/icons/loan.jpeg",
+    "organization": "City Bank",
+    "amount": 10000,
+    "due-date": "2025-05-03T06:57:58.110Z"
+  }
+]

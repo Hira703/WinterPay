@@ -74,6 +74,12 @@ const Navbar = () => {
           >
             My Profile
           </NavLink>
+          <NavLink 
+            to="/about" 
+            className={({ isActive }) => `px-3 py-2 rounded-md ${isActive ? 'text-cyan-400' : 'hover:text-cyan-200'}`}
+          >
+            About Us
+          </NavLink>
         </div>
 
         {/* Mobile Hamburger Menu */}

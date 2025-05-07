@@ -7,10 +7,10 @@ import { FaExclamationTriangle } from 'react-icons/fa';
 
 const BillDetails = () => {
   const { id } = useParams();
-  const [bill, setBill] = useState(null); // null: loading, false: not found, or bill data
+  const [bill, setBill] = useState(null);
   const [paid, setPaid] = useState(false);
   const { balance, setBalance, user } = useAuth();
-  const navigate = useNavigate();  // To navigate back to the Bills page
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) return;
@@ -18,17 +18,17 @@ const BillDetails = () => {
     fetch('/bills.json')
       .then(res => res.json())
       .then(data => {
-        const foundBill = data.find(b => b.id === parseInt(id)); // check if ID matches
+        const foundBill = data.find(b => b.id === parseInt(id));
         if (foundBill) {
           setBill(foundBill);
           const paidBills = JSON.parse(localStorage.getItem('paidBills')) || [];
           setPaid(paidBills.includes(foundBill.id));
         } else {
-          setBill(false); // Bill not found
+          setBill(false);
         }
       })
       .catch(() => {
-        setBill(false); // Error fetching data
+        setBill(false);
       });
   }, [id, user]);
 
@@ -53,13 +53,11 @@ const BillDetails = () => {
       localStorage.setItem('paidBills', JSON.stringify(paidBills));
     }
 
-    // Redirect to the Bills page after successful payment
     setTimeout(() => {
       navigate('/bills');
-    }, 1000); // Delay of 1 second before navigating
+    }, 1000);
   };
 
-  // Loading spinner
   if (bill === null) {
     return (
       <div className="flex justify-center items-center h-[50vh]">
@@ -68,7 +66,6 @@ const BillDetails = () => {
     );
   }
 
-  // Bill not found UI
   if (bill === false) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-white">
@@ -76,7 +73,9 @@ const BillDetails = () => {
           <FaExclamationTriangle className="text-3xl" />
           <div>
             <h3 className="font-semibold text-lg">Bill Not Found</h3>
-            <p className="text-sm">We couldn’t find a bill with ID <code>{id}</code>. Please check the URL or try again later.</p>
+            <p className="text-sm">
+              We couldn’t find a bill with ID <code>{id}</code>. Please check the URL or try again later.
+            </p>
             <Link to="/bills" className="btn btn-sm mt-2 btn-primary">Back to Bills</Link>
           </div>
         </div>
@@ -84,29 +83,50 @@ const BillDetails = () => {
     );
   }
 
-  const { bill_type, icon, organization, amount, ['due-date']: dueDate } = bill;
+  const { bill_type, icon, bill_type_icon, organization, amount, ['due-date']: dueDate } = bill;
 
   return (
-    <div className="max-w-2xl mx-auto bg-base-100 shadow-lg rounded-xl p-6 mt-10 border border-gray-200">
-      <div className="flex flex-col items-center space-y-4">
-        <img src={icon} alt={`${bill_type} icon`} className="w-20 h-20 rounded-full object-cover" />
-        <h1 className="text-2xl font-bold capitalize">{bill_type} Bill</h1>
-        <p className="text-sm text-gray-500">{organization}</p>
-        <div className="divider"></div>
-
-        <div className="w-full space-y-2 text-center">
-          <p className="text-lg"><span className="font-semibold">Amount:</span> ৳{amount}</p>
-          <p className="text-md text-gray-600">
-            <span className="font-semibold">Due Date:</span> {format(new Date(dueDate), 'dd MMM yyyy')}
-          </p>
+    <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl p-6 md:p-10 mt-10 border min-h-[400px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center">
+        {/* Left Column: Organization Icon */}
+        <div className="relative flex justify-center items-center h-full">
+          <img
+            src={icon}
+            alt={`${organization} logo`}
+            className="w-56 md:w-64 h-auto object-contain"
+          />
+          {bill_type_icon && (
+            <div className="absolute bottom-4 right-6 bg-white p-2 rounded-full shadow-lg">
+              <img
+                src={bill_type_icon}
+                alt={`${bill_type} icon`}
+                className="w-10 h-10 object-contain"
+              />
+            </div>
+          )}
         </div>
 
-        <button
-          onClick={handlePayment}
-          className={`btn mt-6 w-full ${paid ? 'btn-disabled' : 'btn-primary'}`}
-        >
-          {paid ? 'Already Paid ✅' : 'Pay Now'}
-        </button>
+        {/* Right Column: Bill Details */}
+        <div className="space-y-4">
+          <h2 className="text-3xl font-bold text-gray-800">{organization}</h2>
+          <p className="text-lg italic text-gray-500">{bill_type} Bill</p>
+          <p className="text-xl font-semibold text-gray-800">
+            Amount: <span className="text-black">{amount} BDT</span>
+          </p>
+          <p className="text-gray-700 text-base">
+            Due Date: {format(new Date(dueDate), 'dd MMMM, yyyy')}
+          </p>
+          <button
+            onClick={handlePayment}
+            className={`mt-6 w-full md:w-1/2 btn transition-all duration-300 ${
+              paid
+                ? 'btn-disabled bg-gray-400 text-white cursor-not-allowed'
+                : 'bg-green-600 hover:bg-green-700 text-white'
+            }`}
+          >
+            {paid ? 'Already Paid ✅' : 'Pay Bill'}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import UpdateProfile from "../pages/UpdateProfile";
 import Bills from "../pages/Bills";
 import BillDetails from "../pages/BillDetails";
 import ErrorPage from "../pages/ErrorPage";
+import About from "../pages/About";
 
 export const router=createBrowserRouter([
 {path:'/',
@@ -42,6 +43,11 @@ children:[
     {
         path:"/bills/:id",
         element:<ProtectedRoute><BillDetails></BillDetails></ProtectedRoute>
+    },
+    {
+        path:'/about',
+        element:<About></About>
+
     },
     // {
     //     path: "*",
