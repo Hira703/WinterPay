@@ -40,7 +40,7 @@ const CustomSlider = () => {
 
   return (
     <div className="my-20 px-4 md:px-12">
-      <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
+      <h2 className="text-4xl  text-center font-extrabold text-blue-900 mb-12">
         WinterPay Highlights
       </h2>
 

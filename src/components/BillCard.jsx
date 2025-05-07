@@ -1,10 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { FaCheckCircle } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext'; // make sure this is imported
 
 const BillCard = ({ bill }) => {
-  const { id, bill_type, icon, organization, amount, ['due-date']: dueDate, type } = bill;
-console.log(bill_type)
+  const { id, bill_type, icon, organization, amount, ['due-date']: dueDate } = bill;
+  const { user } = useAuth();
+
+  // Check if the bill is paid for this user
+  const paidBills = user ? JSON.parse(localStorage.getItem(user.uid)) || [] : [];
+  const isPaid = paidBills.includes(id);
+
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition duration-300 p-6 flex flex-col justify-between">
       {/* Header: Icon + Bill Info */}
@@ -16,23 +23,21 @@ console.log(bill_type)
             className="w-10 h-10 object-contain"
           />
         </div>
-        <div>
-          <h2 className="text-xl font-semibold text-gray-800 capitalize">
+        <div className="flex-1">
+          <h2 className="text-xl font-semibold text-gray-800 capitalize flex items-center gap-2">
             {bill_type} Bill
+            {isPaid && <FaCheckCircle className="text-green-500 text-lg" title="Paid" />}
           </h2>
           <p className="text-sm text-gray-500">{organization}</p>
         </div>
       </div>
 
       {/* Bill Details */}
-      <div className="mt-4">
-        <p className="text-gray-700">
-          <span className="font-medium">Type:</span> {bill_type}
-        </p>
-        <p className="text-gray-700">
+      <div className="mt-4 text-gray-700 space-y-1">
+        <p>
           <span className="font-medium">Amount:</span> ৳{amount}
         </p>
-        <p className="text-gray-700">
+        <p>
           <span className="font-medium">Due Date:</span>{' '}
           {format(new Date(dueDate), 'dd MMM yyyy')}
         </p>
@@ -42,7 +47,7 @@ console.log(bill_type)
       <div className="mt-6 text-right">
         <Link to={`/bills/${id}`}>
           <button className="btn btn-sm bg-blue-600 text-white hover:bg-blue-700 transition">
-            View Details
+            Pay Bill
           </button>
         </Link>
       </div>

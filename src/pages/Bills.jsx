@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import BillCard from '../components/BillCard';
 import Sidebar from '../components/Sidebar'; // Optional if you still want to keep the sidebar
 
@@ -48,6 +49,16 @@ const Bills = () => {
 
   return (
     <div className="p-4 space-y-6">
+      <Helmet>
+        <title>{activeCategory === "All" ? "All Bills" : `${activeCategory} Bills`} | BillPay</title>
+        <meta
+          name="description"
+          content={`View and manage your ${
+            activeCategory === "All" ? "bills" : `${activeCategory.toLowerCase()} bills`
+          } on BillPay.`}
+        />
+      </Helmet>
+
       {/* Dropdown Filter */}
       <div className="max-w-xs">
         <label className="block mb-2 text-sm font-medium text-gray-700">Filter by Bill Type:</label>

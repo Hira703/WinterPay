@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext"; // Adjust path
+import { Helmet } from "react-helmet";
+import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
 const MyProfile = () => {
@@ -29,19 +30,24 @@ const MyProfile = () => {
   };
 
   const handleImageError = (e) => {
-    e.target.onerror = null; // Prevent infinite loop if the default image fails to load
-    e.target.src = "https://i.ibb.co/2kR5zq0/avatar.png"; // Default fallback image URL
+    e.target.onerror = null;
+    e.target.src = "https://i.ibb.co/2kR5zq0/avatar.png";
   };
 
   return (
     <div className="max-w-lg mx-auto p-8 mt-10 bg-white shadow-xl rounded-lg border border-gray-300">
+      <Helmet>
+        <title>My Profile | BillPay</title>
+        <meta name="description" content="View and update your BillPay profile, including name and profile picture." />
+      </Helmet>
+
       <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">My Profile</h2>
       <div className="flex flex-col items-center mb-8">
         <img
-          src={photoURL || "https://i.ibb.co/2kR5zq0/avatar.png"} // Fallback to default image
+          src={photoURL || "https://i.ibb.co/2kR5zq0/avatar.png"}
           alt="Profile"
           className="w-32 h-32 rounded-full object-cover border-4 border-green-500 shadow-md"
-          onError={handleImageError} // Trigger onError handler if image fails
+          onError={handleImageError}
         />
         <p className="mt-2 text-lg font-medium text-gray-700">{user?.email}</p>
       </div>
@@ -80,7 +86,10 @@ const MyProfile = () => {
 
       <div className="mt-6 text-center">
         <button
-          onClick={() => { setName(user.displayName || ""); setPhotoURL(user.photoURL || ""); }}
+          onClick={() => {
+            setName(user.displayName || "");
+            setPhotoURL(user.photoURL || "");
+          }}
           className="text-sm text-gray-500 hover:text-gray-700 focus:outline-none"
         >
           Reset Changes

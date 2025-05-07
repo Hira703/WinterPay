@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import { Helmet } from 'react-helmet'; // Import Helmet
 
 const BillDetails = () => {
   const { id } = useParams();
@@ -15,14 +16,15 @@ const BillDetails = () => {
   useEffect(() => {
     if (!user) return;
 
+    const userPaidBills = JSON.parse(localStorage.getItem(user.uid)) || [];
+    setPaid(userPaidBills.includes(parseInt(id)));
+
     fetch('/bills.json')
       .then(res => res.json())
       .then(data => {
         const foundBill = data.find(b => b.id === parseInt(id));
         if (foundBill) {
           setBill(foundBill);
-          const paidBills = JSON.parse(localStorage.getItem('paidBills')) || [];
-          setPaid(paidBills.includes(foundBill.id));
         } else {
           setBill(false);
         }
@@ -47,10 +49,10 @@ const BillDetails = () => {
     setPaid(true);
     toast.success("Payment Successful!");
 
-    const paidBills = JSON.parse(localStorage.getItem('paidBills')) || [];
-    if (!paidBills.includes(bill.id)) {
-      paidBills.push(bill.id);
-      localStorage.setItem('paidBills', JSON.stringify(paidBills));
+    const userPaidBills = JSON.parse(localStorage.getItem(user.uid)) || [];
+    if (!userPaidBills.includes(bill.id)) {
+      userPaidBills.push(bill.id);
+      localStorage.setItem(user.uid, JSON.stringify(userPaidBills));
     }
 
     setTimeout(() => {
@@ -86,49 +88,51 @@ const BillDetails = () => {
   const { bill_type, icon, bill_type_icon, organization, amount, ['due-date']: dueDate } = bill;
 
   return (
-    <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl p-6 md:p-10 mt-10 border min-h-[400px]">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center">
-        {/* Left Column: Organization Icon */}
-        <div className="relative flex justify-center items-center h-full">
-          <img
-            src={icon}
-            alt={`${organization} logo`}
-            className="w-56 md:w-64 h-auto object-contain"
-          />
-          {bill_type_icon && (
-            <div className="absolute bottom-4 right-6 bg-white p-2 rounded-full shadow-lg">
-              <img
-                src={bill_type_icon}
-                alt={`${bill_type} icon`}
-                className="w-10 h-10 object-contain"
-              />
-            </div>
-          )}
+    <>
+      {/* Helmet to set the page title */}
+      <Helmet>
+        <title>{organization} - Bill Details</title>
+      </Helmet>
+
+      <div className="max-w-4xl mx-auto bg-white p-6 pb-16 rounded-lg shadow-lg mt-10 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          {/* Left: Logo */}
+          <div className="flex justify-center items-center border p-4">
+            <img src={bill_type_icon} alt={`${organization} logo`} className="w-64 object-contain" />
+          </div>
+
+          {/* Right: Info */}
+          <div className="space-y-2 text-center md:text-left">
+            <h2 className="text-xl font-bold text-gray-800">{organization}</h2>
+            <p className="text-gray-600 italic">{bill_type} Bill</p>
+            <p className="text-base text-gray-700">
+              Amount: <span className="font-bold">{amount} BDT</span>
+            </p>
+            <p className="text-base text-gray-700">
+              Due Date: {format(new Date(dueDate), 'dd MMMM, yyyy')}
+            </p>
+            <button
+              onClick={handlePayment}
+              disabled={paid}
+              className={`mt-4 w-full md:w-1/2 py-2 rounded-md font-semibold transition ${
+                paid
+                  ? 'bg-gray-400 text-white cursor-not-allowed'
+                  : 'bg-green-600 hover:bg-green-700 text-white'
+              }`}
+            >
+              {paid ? 'Already Paid ✅' : 'Pay Bill'}
+            </button>
+          </div>
         </div>
 
-        {/* Right Column: Bill Details */}
-        <div className="space-y-4">
-          <h2 className="text-3xl font-bold text-gray-800">{organization}</h2>
-          <p className="text-lg italic text-gray-500">{bill_type} Bill</p>
-          <p className="text-xl font-semibold text-gray-800">
-            Amount: <span className="text-black">{amount} BDT</span>
-          </p>
-          <p className="text-gray-700 text-base">
-            Due Date: {format(new Date(dueDate), 'dd MMMM, yyyy')}
-          </p>
-          <button
-            onClick={handlePayment}
-            className={`mt-6 w-full md:w-1/2 btn transition-all duration-300 ${
-              paid
-                ? 'btn-disabled bg-gray-400 text-white cursor-not-allowed'
-                : 'bg-green-600 hover:bg-green-700 text-white'
-            }`}
-          >
-            {paid ? 'Already Paid ✅' : 'Pay Bill'}
-          </button>
-        </div>
+        {/* Overlapping Icon Fixed */}
+        {bill_type_icon && (
+          <div className="absolute left-1/2 transform -translate-x-1/2 bottom-4 bg-white shadow-md rounded-full p-2 border">
+            <img src={icon} alt="Bill Type Icon" className="w-14 h-14 object-contain" />
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

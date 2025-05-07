@@ -8,36 +8,40 @@ import {
   updateProfile,
   signInWithPopup,
   GoogleAuthProvider,
-  sendPasswordResetEmail, 
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { app } from '../firebase/firebase';
 
 const auth = getAuth(app);
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [balance, setBalance] = useState(10000); // default balance
 
-
-  const [balance, setBalance] = useState(() => {
-    const stored = localStorage.getItem('balance');
-    return stored ? parseFloat(stored) : 10000;
-  });
-
+  // Load balance from localStorage when user logs in
   useEffect(() => {
-    localStorage.setItem('balance', balance);
-  }, [balance]);
+    if (user?.uid) {
+      const stored = localStorage.getItem(`balance_${user.uid}`);
+      setBalance(stored ? parseFloat(stored) : 10000);
+    }
+  }, [user]);
+
+  // Save balance to localStorage when it changes
+  useEffect(() => {
+    if (user?.uid) {
+      localStorage.setItem(`balance_${user.uid}`, balance);
+    }
+  }, [balance, user]);
 
   const payBill = (amount) => {
     if (balance >= amount) {
-      setBalance(prev => prev - amount);
+      setBalance((prev) => prev - amount);
       return true;
     }
     return false;
   };
-
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -54,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth)
       .then(() => {
         setUser(null);
-        setBalance(10000);
+        setBalance(10000); // reset state only (localStorage is preserved)
       })
       .finally(() => setLoading(false));
   };
@@ -75,22 +79,17 @@ export const AuthProvider = ({ children }) => {
       .finally(() => setLoading(false));
   };
 
-
   const resetPassword = (email) => {
     setLoading(true);
-    return sendPasswordResetEmail(auth, email)
-      .finally(() => setLoading(false));
+    return sendPasswordResetEmail(auth, email).finally(() =>
+      setLoading(false)
+    );
   };
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-
-      if (currentUser) {
-        setBalance(10000);
-      }
     });
     return () => unsubscribe();
   }, []);
@@ -106,7 +105,7 @@ export const AuthProvider = ({ children }) => {
     logOut,
     updateUser,
     signInWithGoogle,
-    resetPassword, 
+    resetPassword,
   };
 
   return (

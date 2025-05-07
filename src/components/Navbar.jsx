@@ -5,7 +5,7 @@ import logo from '../assets/logos/nav-logo.jpg';
 import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
-  const { user, logOut, balance } = useAuth(); 
+  const { user, logOut, balance } = useAuth(); // Balance from AuthContext
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); 
@@ -127,6 +127,7 @@ const Navbar = () => {
               {dropdownVisible && (
                 <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg rounded-lg z-10">
                   <div className="p-4">
+                    {/* Show the current balance */}
                     <p className="font-semibold">Balance: ৳{balance}</p>
                   </div>
                   <button 

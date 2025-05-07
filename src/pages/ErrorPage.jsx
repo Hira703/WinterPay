@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import errorImage from '../assets/logos/error.svg'; // Adjust path if needed
 
 const ErrorPage = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-center px-4">
+      <Helmet>
+        <title>404 - Page Not Found | BillPay</title>
+        <meta name="description" content="Sorry, the page you're looking for doesn't exist or has been moved." />
+      </Helmet>
+
       <img
         src={errorImage}
         alt="404 Not Found"

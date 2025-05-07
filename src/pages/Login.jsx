@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa'; // Imported FaGoogle icon
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -62,83 +63,92 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-60 to-blue-50 px-4 py-12">
-      <div className="w-full max-w-md bg-gray-100 rounded-xl shadow-xl p-8 space-y-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800">Login to Your Account</h2>
+    <>
+      {/* Helmet to set the page title */}
+      <Helmet>
+        <title>Login - Your Website</title>
+      </Helmet>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-60 to-blue-50 px-4 py-12">
+        <div className="w-full max-w-md bg-gray-100 rounded-xl shadow-xl p-8 space-y-6">
+          <h2 className="text-3xl font-bold text-center text-gray-800">Login to Your Account</h2>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Password</label>
-            <div className="relative mt-2">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Email</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your password"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
                 required
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
             </div>
-          </div>
 
-          <div className="text-right text-sm text-blue-500 hover:underline cursor-pointer">
-            <span onClick={handleForgotPassword}>Forgot Password?</span>
-          </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Password</label>
+              <div className="relative mt-2">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+            </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          {message && <p className="text-green-600 text-sm">{message}</p>}
+            <div className="text-right text-sm text-blue-500 hover:underline cursor-pointer">
+              <span onClick={handleForgotPassword}>Forgot Password?</span>
+            </div>
 
-          <button
-            type="submit"
-            className={`btn btn-primary w-full flex justify-center items-center ${loading ? 'btn-disabled' : ''}`}
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <span className="loading loading-spinner loading-sm mr-2"></span>
-                Logging in...
-              </>
-            ) : (
-              'Login'
-            )}
-          </button>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {message && <p className="text-green-600 text-sm">{message}</p>}
 
-          <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            className="btn btn-outline btn-error w-full"
-          >
-            Continue with Google
-          </button>
-        </form>
+            <button
+              type="submit"
+              className={`btn btn-primary w-full flex justify-center items-center ${loading ? 'btn-disabled' : ''}`}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="loading loading-spinner loading-sm mr-2"></span>
+                  Logging in...
+                </>
+              ) : (
+                'Login'
+              )}
+            </button>
 
-        <p className="text-center text-sm">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-blue-500 hover:underline font-medium">
-            Register here
-          </Link>
-        </p>
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="btn btn-outline btn-error w-full flex items-center justify-center gap-2"
+            >
+              {/* Google Icon */}
+              <FaGoogle className="text-lg" />
+              Continue with Google
+            </button>
+          </form>
+
+          <p className="text-center text-sm">
+            Don't have an account?{' '}
+            <Link to="/register" className="text-blue-500 hover:underline font-medium">
+              Register here
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
