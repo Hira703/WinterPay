@@ -46,7 +46,7 @@ children:[
     },
     {
         path:'/about',
-        element:<About></About>
+        element:<ProtectedRoute><About></About></ProtectedRoute>
 
     },
     // {

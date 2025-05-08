@@ -1,3 +1,4 @@
+// src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import {
   getAuth,
@@ -18,23 +19,30 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [balance, setBalance] = useState(10000); // default balance
+  const [balance, setBalance] = useState(10000); // Default balance
+  const [cards, setCards] = useState([
+    'Visa - 1234',
+    'MasterCard - 5678',
+    'bKash - 019XXXXXXXX',
+    'Rocket - 018XXXXXXXX'
+  ]);
 
-  // Load balance from localStorage when user logs in
+  // Load balance from localStorage
   useEffect(() => {
     if (user?.uid) {
-      const stored = localStorage.getItem(`balance_${user.uid}`);
-      setBalance(stored ? parseFloat(stored) : 10000);
+      const storedBalance = localStorage.getItem(`balance_${user.uid}`);
+      setBalance(storedBalance ? parseFloat(storedBalance) : 10000);
     }
   }, [user]);
 
-  // Save balance to localStorage when it changes
+  // Persist balance on change
   useEffect(() => {
     if (user?.uid) {
       localStorage.setItem(`balance_${user.uid}`, balance);
     }
   }, [balance, user]);
 
+  // Payment helper
   const payBill = (amount) => {
     if (balance >= amount) {
       setBalance((prev) => prev - amount);
@@ -58,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth)
       .then(() => {
         setUser(null);
-        setBalance(10000); // reset state only (localStorage is preserved)
+        setBalance(10000);
       })
       .finally(() => setLoading(false));
   };
@@ -86,6 +94,7 @@ export const AuthProvider = ({ children }) => {
     );
   };
 
+  // Watch auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -106,6 +115,8 @@ export const AuthProvider = ({ children }) => {
     updateUser,
     signInWithGoogle,
     resetPassword,
+    cards,
+    setCards, // <- card management now globally available
   };
 
   return (

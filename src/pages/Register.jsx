@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
-import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa'; // Added Google icon
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
 
@@ -12,8 +12,11 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+
   const { createUser, updateUser, signInWithGoogle, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -40,10 +43,15 @@ const Register = () => {
     try {
       const userCredential = await createUser(email, password);
       await updateUser({ displayName: name, photoURL });
-      navigate('/');
+
+      // Optional: Short delay to ensure Firebase auth state updates
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      toast.success('Account created successfully!');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
-      toast.error(err.message); // Display error message in toast
+      toast.error(err.message);
     }
   };
 
@@ -51,10 +59,11 @@ const Register = () => {
     setError('');
     try {
       await signInWithGoogle();
-      navigate('/');
+      toast.success('Signed in with Google!');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
-      toast.error(err.message); // Display error message in toast
+      toast.error(err.message);
     }
   };
 

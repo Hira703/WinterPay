@@ -7,8 +7,10 @@ const Counter = () => {
     <section className="bg-gradient-to-r from-sky-50 to-blue-100 py-20 border-t border-blue-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-blue-900">Platform Activity Overview</h2>
-          <p className="mt-4 text-lg text-gray-700">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-blue-900 mb-4">
+            Platform Activity Overview
+          </h2>
+          <p className="mt-4 text-lg font-semibold text-gray-700">
             Trusted by thousands across Bangladesh to simplify bill payments.
           </p>
         </div>
@@ -58,7 +60,7 @@ const StatCard = ({ icon, label, end, suffix, iconBg, iconColor }) => {
       <div className={`w-16 h-16 mx-auto flex items-center justify-center rounded-full ${iconBg} ${iconColor}`}>
         {icon}
       </div>
-      <h3 className="text-3xl font-bold text-gray-900 mt-4">
+      <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-4">
         <CountUp end={end} duration={2} separator="," suffix={suffix} />
       </h3>
       <p className="text-md text-gray-600 mt-2">{label}</p>

@@ -11,7 +11,7 @@ const CategoryCard = ({ category }) => {
 
   return (
     <div
-      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow transform hover:scale-105 cursor-pointer"
+      className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow transform hover:scale-105 cursor-pointer"
       onClick={handleClick}
     >
       <figure className="p-6">
@@ -21,9 +21,9 @@ const CategoryCard = ({ category }) => {
           className="w-32 h-32 object-cover rounded-full mx-auto mb-4"
         />
       </figure>
-      <div className="card-body text-center">
-        <h3 className="text-xl font-semibold text-gray-800">{category.category}</h3>
-        <p className="text-sm text-gray-600 mt-2">
+      <div className="card-body text-center p-6">
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">{category.category}</h3>
+        <p className="text-sm text-gray-600">
           {/* Highlight service provider names */}
           {category.service_providers.map((provider, index) => (
             <span

@@ -1,5 +1,3 @@
-// src/routes/ProtectedRoute.jsx or wherever your route components are located
-
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -9,12 +7,15 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    // You can show a loading spinner or splash screen while checking auth state
-    return <div className="text-center p-4">Loading...</div>;
+    // DaisyUI loading spinner (centered)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
   }
 
   if (!user) {
-    // Redirect to login and save the attempted route in `state.from`
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
