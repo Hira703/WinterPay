@@ -18,12 +18,21 @@ const Register = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
 
+  const isValidImageURL = (url) => {
+    return /^https?:\/\/.*\.(jpeg|jpg|gif|png|webp|bmp|svg)$/i.test(url);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
 
     if (name.length < 5) {
       setError('Name should be more than 5 characters.');
+      return;
+    }
+
+    if (photoURL && !isValidImageURL(photoURL)) {
+      setError('Please enter a valid image URL (ending in .jpg, .png, etc).');
       return;
     }
 
