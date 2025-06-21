@@ -53,7 +53,7 @@ Clone the repository:
 bash
 Copy
 Edit
-git clone https://github.com/yourusername/utility-bill-app.git
+git clone https://github.com/Hira703/WinterPay
 cd utility-bill-app
 Install dependencies:
 
