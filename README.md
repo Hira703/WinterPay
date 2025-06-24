@@ -61,34 +61,31 @@ If the user is **not logged in**, they are redirected to the `/login` page to en
 ## 🛠 Installation & Running Locally
 
 ### 📥 Clone the Repository
-
 ```bash
 git clone https://github.com/Hira703/WinterPay
 cd utility-bill-app
+```
 📦 Install Dependencies
 ```bash
-
 npm install
-
-🧪 Environment Setup
+```
+###🧪 Environment Setup
 Create a .env file in the root and add your Firebase credentials:
 
-```bash
-
-# .env
+```env
 VITE_FIREBASE_API_KEY=your-api-key
 VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
 VITE_FIREBASE_PROJECT_ID=your-project-id
 VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
 VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
 VITE_FIREBASE_APP_ID=your-app-id
-▶️ Start the Development Server
+```
+###▶️ Start the Development Server
 ```bash
-
 npm run dev
+```
 📁 Project Structure
 ```bash
-
 src/
 ├── assets/           # Logos, images, etc.
 ├── components/       # UI components (Navbar, BillCard, etc.)
@@ -99,12 +96,13 @@ src/
 ├── utils/            # Helpers like auth/localStorage
 ├── App.jsx           # Main App component
 └── main.jsx          # React entry point
-🧑‍💻 Developer
+```
+##🧑‍💻 Developer
 Built with ❤️ by Sonia Akter Hira
 
 📧 Email: soniahira48@gmail.com
 
-🙏 Acknowledgements
+##🙏 Acknowledgements
 🔗 EkPay Bangladesh – UI inspiration
 
 🧩 Tailwind CSS – Fast and flexible styling
@@ -114,4 +112,3 @@ Built with ❤️ by Sonia Akter Hira
 🖼 SwiperJS – Carousel integration
 
 🎨 DaisyUI – Easy Tailwind UI components
-
