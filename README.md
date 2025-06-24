@@ -1,126 +1,117 @@
-💡 Utility Bill Payment Web App
-A modern, responsive utility bill payment platform built using React + Vite. Users can securely log in, view bills by category, and complete payments for electricity, gas, water, internet, and more. Inspired by ekpay.gov.bd.
+# 💡 Utility Bill Payment Web App – *WinterPay*
 
-🌐 Live Site
-🔗 https://stirring-cascaron-0898bd.netlify.app/
+A modern, responsive utility bill payment platform built using **React + Vite**. Users can securely log in, view categorized bills, and complete payments for electricity, gas, water, internet, and more. Inspired by [ekpay.gov.bd](https://ekpay.gov.bd/).
 
+🔗 **Live Site:** [Visit WinterPay](https://stirring-cascaron-0898bd.netlify.app/)
 
+---
 
+## 🚀 Features
 
-🚀 Features
-🔐 Firebase Authentication – Secure login/register with email and password
+- 🔐 **Firebase Authentication** – Secure login/register via email and password  
+- 🧾 **Bill Management** – Pay electricity, gas, water, internet, credit cards, etc.  
+- 🗂 **Dynamic Bill Data** – All bill types and providers rendered from JSON  
+- 📱 **Responsive UI** – Mobile-first layout using Tailwind CSS and DaisyUI  
+- 🖼 **SwiperJS Slider** – Animated logo carousel on homepage  
+- 🛡 **Protected Routes** – Only authenticated users can access bills & profile  
+- 👤 **User Profile Page** – View and manage user info (name, email, photo)
 
-🧾 Bill Management – Pay Electricity, Gas, Water, Internet, Credit Cards, and more
+---
 
-🗂 JSON-Based Bill Data – Dynamic rendering of bill types and providers from JSON files
+## 📦 Tech Stack
 
-📱 Responsive Design – Mobile-first layout with Tailwind CSS & DaisyUI
+| Technology        | Purpose                                     |
+|-------------------|---------------------------------------------|
+| React + Vite      | Frontend framework and dev environment      |
+| Tailwind CSS      | Utility-first CSS styling                   |
+| DaisyUI           | Pre-styled Tailwind component library       |
+| React Router      | Routing and navigation                      |
+| Firebase Auth     | Secure user authentication                  |
+| SwiperJS          | Homepage carousel for organization logos    |
+| JSON Data         | Simulated backend for bill categories       |
 
-🖼 SwiperJS Slider – Animated logo carousel on the homepage for visual appeal
+---
 
-🛡 Protected Routes – Only authenticated users can access bill-related pages and user profile
+## 🔑 Protected Routes
 
-📄 User Profile Page – View and manage account info like name, email, and photo
+| Route                  | Access Control |
+|------------------------|----------------|
+| `/bills`               | Authenticated  |
+| `/bill-details/:id`    | Authenticated  |
+| `/profile`             | Authenticated  |
 
-📦 Tech Stack
-Tech	Purpose
-React + Vite	Frontend & development environment
-Tailwind CSS	Utility-first styling
-DaisyUI	UI components with Tailwind integration
-React Router	Routing & navigation
-Firebase Auth	User authentication with secure login
-SwiperJS	Carousel for displaying organization logos
-JSON Data	Simulated backend for bill categories
+If the user is **not logged in**, they are redirected to the `/login` page to ensure only authorized users can view and manage bills.
 
-🔑 Protected Routes
-Pages like /bills, /bill-details/:id, and /profile are protected. If the user is not logged in, they will be redirected to the login page. This ensures that only authorized users can view and manage their bills.
+---
 
-🧭 Pages Overview
-Route	Description
-/	Homepage with hero, slider, and bill categories
-/login	Firebase email login
-/register	Firebase email registration
-/bills	View all bills (auth required)
-/bill-details/:id	Detailed bill info + payment (auth required)
-/profile	User profile (auth required)
-/404	Custom 404 Not Found page
+## 🧭 Pages Overview
 
-🛠 Installation & Running Locally
-To get started with this project locally, follow the steps below:
+| Route              | Description                                  |
+|--------------------|----------------------------------------------|
+| `/`                | Homepage with hero, slider, and bill types   |
+| `/login`           | Firebase email login                         |
+| `/register`        | Firebase email registration                  |
+| `/bills`           | Browse all bills (protected)                 |
+| `/bill-details/:id`| Bill details + payment form (protected)      |
+| `/profile`         | User profile page (protected)                |
+| `*`                | Custom 404 - Not Found page                  |
 
-Clone the repository:
+---
 
-bash
-Copy
-Edit
+## 🛠 Installation & Running Locally
+
+### 📥 Clone the Repository
+
+```bash
 git clone https://github.com/Hira703/WinterPay
 cd utility-bill-app
-Install dependencies:
+📦 Install Dependencies
+```bash
 
-bash
-Copy
-Edit
 npm install
-Create a .env file:
-Ensure you have Firebase keys stored securely in your .env file to avoid exposing them publicly. Example:
 
-ini
-Copy
-Edit
-VITE_FIREBASE_API_KEY=your-firebase-api-key
-VITE_FIREBASE_AUTH_DOMAIN=your-firebase-auth-domain
-VITE_FIREBASE_PROJECT_ID=your-firebase-project-id
-VITE_FIREBASE_STORAGE_BUCKET=your-firebase-storage-bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your-firebase-messaging-sender-id
-VITE_FIREBASE_APP_ID=your-firebase-app-id
-Start the development server:
+🧪 Environment Setup
+Create a .env file in the root and add your Firebase credentials:
 
-bash
-Copy
-Edit
+```bash
+
+# .env
+VITE_FIREBASE_API_KEY=your-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+VITE_FIREBASE_APP_ID=your-app-id
+▶️ Start the Development Server
+```bash
+
 npm run dev
-💻 Project Structure
-graphql
-Copy
-Edit
+📁 Project Structure
+```bash
+
 src/
-│
-├── assets/             # Images, logos, etc.
-├── components/         # Reusable UI components (Navbar, BillCard, etc.)
-├── data/               # JSON files for bills & categories
-├── layout/             # Layout files (Navbar, Footer, etc.)
-├── pages/              # Page components for different routes
-├── routes/             # Routing logic and protected routes
-├── utils/              # Helper functions (e.g., authentication, localStorage)
-├── App.jsx             # Main App wrapper
-└── main.jsx            # React DOM render entry
-🔑 GitHub Commits
-Include at least 10 meaningful commits with descriptive messages. Commit frequently as you develop the app to keep track of changes.
+├── assets/           # Logos, images, etc.
+├── components/       # UI components (Navbar, BillCard, etc.)
+├── data/             # JSON files for bills & providers
+├── layout/           # Shared layout (Navbar, Footer)
+├── pages/            # Route components (Home, Login, etc.)
+├── routes/           # Route definitions and protection
+├── utils/            # Helpers like auth/localStorage
+├── App.jsx           # Main App component
+└── main.jsx          # React entry point
+🧑‍💻 Developer
+Built with ❤️ by Sonia Akter Hira
 
-📝 Design and Responsiveness
-Responsiveness: This website is fully responsive, ensuring that it works seamlessly across mobile, tablet, and desktop devices.
-
-Unique Design: The UI is inspired by EkPay, but with a modern and unique twist to suit the app’s purpose in the local context. The design encourages local support for utility payments.
-
-🛠 Hosting
-The app is hosted on Netlify. Visit the live site here.
-
-📧 Contact
 📧 Email: soniahira48@gmail.com
 
 🙏 Acknowledgements
+🔗 EkPay Bangladesh – UI inspiration
 
-EkPay Bangladesh – Design inspiration
+🧩 Tailwind CSS – Fast and flexible styling
 
-Tailwind CSS – For utility-first styling
+🔐 Firebase – Authentication service
 
-Firebase Authentication – For user authentication
+🖼 SwiperJS – Carousel integration
 
-SwiperJS – For the carousel on the homepage
-
-DaisyUI – For ready-to-use UI components
-
-🧑‍💻 Developer
-
-Developed by Sonia Akter Hira
+🎨 DaisyUI – Easy Tailwind UI components
 
